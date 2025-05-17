@@ -1,0 +1,76 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env
+.venv
+venv/
+ENV/
+
+# Django-specific files
+*.log
+db.sqlite3
+local_settings.py
+media/
+staticfiles/
+
+# Migrations (optional, ignore only in development)
+**/migrations/**
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Celery
+celerybeat-schedule.*
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs and temporary files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore database dumps
+*.sql
+*.sqlite3
+
+# Ignore compiled translations
+*.mo
+*.pot
+
+# Ignore Django secret key file (if used)
+.env.secret
+
+# Ignore Docker files (if applicable)
+docker-compose.override.yml
