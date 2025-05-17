@@ -1,4 +1,6 @@
 Django>=5.2.1,<5.3
 djangorestframework>=3.16,<3.17
+psycopg2
+python-decouple>=3.8,<3.9
 
 
