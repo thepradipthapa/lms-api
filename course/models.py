@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 
 class Category(models.Model):
-    """ Represents a category for organizing coirses in the database."""
+    """ Represents a category for organizing course in the database."""
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     slug = models.SlugField(null=False)
@@ -32,7 +32,8 @@ class Course(models.Model):
     category = models.ForeignKey(
         Category, 
         on_delete=models.CASCADE, 
-        related_name='courses')
+        related_name='courses'
+    )
     thumbnail = models.ImageField(upload_to='course/thumbnails/', null=True)
     resourse = models.FileField(upload_to='course/resources/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,4 +45,24 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Course"
         verbose_name_plural = "Courses"
+        ordering = ['title']
+
+
+class Tag(models.Model):
+    """ Represents a tag for organizing courses in the database."""
+
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    title = models.CharField(max_length=20, null=False)
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE, 
+        related_name='tags'
+    ) 
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = "Tag"
+        verbose_name_plural = "Tags"
         ordering = ['title']
