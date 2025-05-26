@@ -17,6 +17,6 @@ tag_router.register('', TagViewSet, basename='tag')
 
 urlpatterns = [
     path('categories/', include(category_router.urls)),
-    path('courses/', include(course_router.urls)),
     path('tags/', include(tag_router.urls)),
+    path('', include(course_router.urls)),
 ]

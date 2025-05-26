@@ -19,11 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 from . import settings
 from django.conf.urls.static import static
+from core.views import api_root
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/', include('course.urls')),
+    path("", api_root, name="api_root"),
+     path('api/courses/', include(('course.urls', 'course'), namespace='course')),
     path('api/chapters/', include('chapter.urls')),
     path('api/coupons/', include('coupon.urls')),
     path('api/review/', include('review.urls')),

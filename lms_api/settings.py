@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "review",
     "coupon",
     "doubt",
+    "core",
 ]
 
 MIDDLEWARE = [
