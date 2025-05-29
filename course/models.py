@@ -5,7 +5,7 @@ class Category(models.Model):
     """ Represents a category for organizing course in the database."""
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    slug = models.SlugField(null=False)
+    slug = models.SlugField(null=False, unique=True)
     title = models.CharField(max_length=50, null=False)
 
     def __str__(self):
