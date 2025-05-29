@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import CategoryViewSet, CourseViewSet, TagViewSet
+from .views import CategoryViewSet, CourseViewSet, TagViewSet, CourseDetailbySlugView
 from rest_framework.routers import DefaultRouter
 
 # course/urls.py
@@ -19,4 +19,5 @@ urlpatterns = [
     path('categories/', include(category_router.urls)),
     path('tags/', include(tag_router.urls)),
     path('', include(course_router.urls)),
+    path('slug/<slug:slug>/', CourseDetailbySlugView.as_view(), name='course-detail-by-slug'),
 ]

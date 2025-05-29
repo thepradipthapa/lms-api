@@ -14,13 +14,14 @@ def api_root(request):
 
         "Course": {
             "Course List": reverse('course:course-list', request=request),
-            "Course Detail": reverse('course:course-detail', kwargs={'pk': 'pk'}, request=request),
+            "Course Detail": reverse('course:course-detail', kwargs={'pk': 'write-here-pk'}, request=request),
+            "Course Detail By Slug": reverse('course:course-detail-by-slug', kwargs={'slug': 'write-here-slug'}, request=request),
     
         },
     
         "Category": {
             "Category List": reverse('course:category-list', request=request),
-            "Category Detail": reverse('course:category-detail', kwargs={'pk': 'pk'}, request=request),
+            "Category Detail": reverse('course:category-detail', kwargs={'pk': 'write-here-pk'}, request=request),
         },
 
         "Tag": {
