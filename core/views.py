@@ -14,21 +14,22 @@ def api_root(request):
 
         "Course": {
             "Course List": reverse('course:course-list', request=request),
-            "Course Detail": reverse('course:course-detail', kwargs={'pk': 'write-here-pk'}, request=request),
-            "Course Detail By Slug": reverse('course:course-detail-by-slug', kwargs={'slug': 'write-here-slug'}, request=request),
+            "Course Detail": reverse('course:course-detail', kwargs={'pk': 'course-pk'}, request=request),
+            "Course Detail By Slug": reverse('course:course-detail-by-slug', kwargs={'slug': 'course-slug'}, request=request),
     
         },
     
         "Category": {
             "Category List": reverse('course:category-list', request=request),
-            "Category Detail": reverse('course:category-detail', kwargs={'pk': 'write-here-pk'}, request=request),
+            "Category Detail": reverse('course:category-detail', kwargs={'pk': 'category-pk'}, request=request),
+            "Category Detail By Slug": reverse('course:category-detail-by-slug', kwargs={'slug': 'category-slug'}, request=request),
         },
 
         "Tag": {
 
 
         "Tag list": reverse('course:tag-list', request=request),
-        "Tag Detail": reverse('course:tag-detail', kwargs={'pk': 'pk'}, request=request),
+        "Tag Detail": reverse('course:tag-detail', kwargs={'pk': 'tag-pk'}, request=request),
         },
     }
     return Response(response)

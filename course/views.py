@@ -9,6 +9,12 @@ class CategoryViewSet(ModelViewSet):
     """ ViewSet for handling Category operations. """
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+class CategoryDetailbySlugView(RetrieveUpdateDestroyAPIView):
+    """ View for retrieving, updating, or deleting a category by its slug. """
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    lookup_field = 'slug'
   
 class CourseViewSet(ModelViewSet):
     """ ViewSet for handling Course operations. """
