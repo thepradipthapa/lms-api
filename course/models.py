@@ -21,7 +21,7 @@ class Course(models.Model):
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     title = models.CharField(max_length=100, null=False)
-    slug = models.SlugField(null=False)
+    slug = models.SlugField(null=False, unique=True)
     instructor = models.CharField(max_length=100, null=False)
     description = models.TextField(max_length=1000, null=False)
     language = models.CharField(max_length=50, null=False)
