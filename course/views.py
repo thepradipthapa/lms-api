@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from django.core.exceptions import ValidationError
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAdminUser
 from .serializers import CategorySerializer, CourseSerializer, TagSerializer
 from .models import Category, Course, Tag
 from core.permissions import IsAdminOrReadOnly
@@ -28,6 +28,7 @@ class CourseViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]  
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    filterset_fields = ['category', 'slug', 'price']
 
     def create(self, request, *args, **kwargs):
         """ Override the create method to handle custom logic. """
@@ -63,6 +64,24 @@ class CourseDetailbySlugView(RetrieveUpdateDestroyAPIView):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
     lookup_field = 'slug'
+
+class CourseByCategoryView(APIView):
+
+    """ View for retrieving courses by category id. """
+    permission_classes = [IsAdminOrReadOnly]  
+
+    def get(self, request, category_id):
+        """ Handle GET requests to retrieve courses by category id. """
+        try:
+            category = Category.objects.get(id=category_id)
+        except (ValidationError, Category.DoesNotExist):
+            return Response(
+                {"error": "Invalid category ID"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        courses = Course.objects.filter(category=category)
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TagViewSet(ModelViewSet):
