@@ -11,10 +11,12 @@ class CategorySerializer(ModelSerializer):
 
 class CourseSerializer(ModelSerializer):
     """ Serializer for the Course model. """
-    
+    category= CategorySerializer(read_only=True) # Nested serializer for category
+
     class Meta:
         model = Course
         fields = '__all__'
+
 
 class TagSerializer(ModelSerializer):
     """ Serializer for the Tag model. """
