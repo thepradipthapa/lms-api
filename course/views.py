@@ -71,5 +71,33 @@ class TagViewSet(ModelViewSet):
     serializer_class = TagSerializer
     queryset = Tag.objects.all()  
 
+    def create(self, request, *args, **kwargs):
+        """ Override the create method to handle custom logic. """
+        tag = request.data
+        course = tag.get('course')
+        if course is None:
+            return Response(
+                {"error": "Course is required"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )  
+        try:
+            course = Course.objects.get(id=course)
+
+        except (ValidationError, Course.DoesNotExist):
+            return Response(
+                {"error": "Invalid course ID"}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        serializer = TagSerializer(data=tag)
+        if serializer.is_valid():
+            instance = Tag(**serializer.validated_data, course=course)
+            instance.save()
+            return Response(
+                serializer.data , 
+                status=status.HTTP_201_CREATED
+            )
+        return Response(serializer.errors)
+
 
 

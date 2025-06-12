@@ -20,6 +20,7 @@ class CourseSerializer(ModelSerializer):
 
 class TagSerializer(ModelSerializer):
     """ Serializer for the Tag model. """
+    course = CourseSerializer(read_only=True)  # Nested serializer for course
     
     class Meta:
         model = Tag
