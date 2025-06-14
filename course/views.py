@@ -28,7 +28,9 @@ class CourseViewSet(ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]  
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    search_fields = ['title', 'description', 'tagline', 'slug']
     filterset_fields = ['category', 'slug', 'price']
+    ordering_fields = '__all__'
 
     def create(self, request, *args, **kwargs):
         """ Override the create method to handle custom logic. """
