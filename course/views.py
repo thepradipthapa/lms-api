@@ -27,10 +27,19 @@ class CourseViewSet(ModelViewSet):
     """ ViewSet for handling Course operations. """
     permission_classes = [IsAdminOrReadOnly]  
     serializer_class = CourseSerializer
-    queryset = Course.objects.all()
     search_fields = ['title', 'description', 'tagline', 'slug']
     filterset_fields = ['category', 'slug', 'price']
     ordering_fields = '__all__'
+
+    queryset = Course.objects.all()
+
+    def get_queryset(self):
+        """ Override the get_queryset method to filter courses by tag if provided. """
+        tag = self.request.query_params.get('tag')
+        if tag is not None:
+            courseids = Tag.objects.filter(title=tag).values_list('course')
+            return Course.objects.filter(id__in=courseids)
+        return super().get_queryset()
 
     def create(self, request, *args, **kwargs):
         """ Override the create method to handle custom logic. """
