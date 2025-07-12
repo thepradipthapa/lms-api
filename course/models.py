@@ -35,7 +35,7 @@ class Course(models.Model):
         related_name='courses'
     )
     thumbnail = models.ImageField(upload_to='course/thumbnails/', null=True)
-    resourse = models.FileField(upload_to='course/resources/', null=True)
+    resource = models.FileField(upload_to='course/resources/', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
