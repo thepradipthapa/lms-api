@@ -26,7 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", api_root, name="api_root"),
      path('api/', include(('course.urls', 'course'), namespace='course')),
-    path('api/chapters/', include('chapter.urls')),
+    path('api/chapters/', include(('chapter.urls', 'chapter'), namespace='chapter')),
     path('api/coupons/', include('coupon.urls')),
     path('api/review/', include('review.urls')),
     path('api/orders/', include('order.urls')),

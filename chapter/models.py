@@ -10,6 +10,13 @@ chapter_choices = [
     ('L', 'LINK'),
 ]
 
+chapter_choices_description = (
+    ('T', 'Text Chapter'),
+    ('H', 'Heading Chapter'),
+    ('V', 'Video Chapter'),
+    ('L', 'Link Chapter'),
+)
+
 video_platform_choices = [
     ('Y', 'YOUTUBE'),
     ('V', 'VIMEO'),
