@@ -10,7 +10,14 @@ chapter_choices = [
     ('L', 'LINK'),
 ]
 
+video_platform_choices = [
+    ('Y', 'YOUTUBE'),
+    ('V', 'VIMEO'),
+
+]
+
 class Chapter(models.Model):
+    """ Represents a chapter in the course."""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     course = models.ForeignKey(
         Course,
@@ -20,8 +27,7 @@ class Chapter(models.Model):
 
     chapter_type = models.CharField(
         max_length=2,
-        choices=chapter_choices,
-        default='TEXT'
+        choices=chapter_choices
     )
     index = models.IntegerField(null=False)
     parent_chapter = models.ForeignKey(
@@ -36,3 +42,58 @@ class Chapter(models.Model):
     def __str__(self):
         return f"Chapter {self.index} - {self.chapter_type}"
     
+
+    class Meta:
+        verbose_name = "Chapter"
+        verbose_name_plural = "Chapters"
+        ordering = ['course', 'index']
+
+class LinkChapter(models.Model):
+    """ Represents a link chapter in the database."""
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    lecture = models.OneToOneField(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name='link_chapter'
+    )
+    title = models.CharField(max_length=50, null=False)
+    url = models.URLField(max_length=200, null=False)
+
+    class Meta:
+        verbose_name = "Link Chapter"
+        verbose_name_plural = "Link Chapters"
+
+class TextChapter(models.Model):
+    """ Represents a text chapter in the database."""
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    lecture = models.OneToOneField(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name='text_chapter'
+    )
+    title = models.CharField(max_length=50, null=False)
+    content = models.TextField(null=False)
+
+    class Meta:
+        verbose_name = "Text Chapter"
+        verbose_name_plural = "Text Chapters"
+
+class VideoChapter(models.Model):
+    """ Represents a video chapter in the database."""
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    lecture = models.OneToOneField(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name='video_chapter'
+    )
+    title = models.CharField(max_length=50, null=False)
+    video_id = models.CharField(max_length=100, null=False)
+    description = models.TextField(null=True)
+    video_platform = models.CharField(
+        max_length=2,
+        choices=video_platform_choices,
+    )
+    class Meta:
+        verbose_name = "Video Chapter"
+        verbose_name_plural = "Video Chapters"
+
