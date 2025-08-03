@@ -1,6 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from chapter.models import chapter_choices, chapter_choices_description, video_platform_choices
+from rest_framework.generics import ListAPIView
+from chapter.models import chapter_choices, chapter_choices_description, video_platform_choices, Chapter
+from .serializers import ChapterSerializer 
 
 # Create your views here.
 @api_view(['GET'])
@@ -27,3 +29,13 @@ def video_platform_view(request):
     platform = map(lambda choice: dict(id=choice[0], platform=choice[1]),
                    video_platform_choices)
     return Response(platform)
+
+
+class ChapterListView(ListAPIView):
+    """ Returns a list of chapters. """
+    queryset = Chapter.objects.all()
+    serializer_class =  ChapterSerializer
+
+    def get(self, request, *args, **kwargs):
+        """ Handles GET requests. """
+        return super().get(request, *args, **kwargs)

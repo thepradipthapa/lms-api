@@ -104,3 +104,18 @@ class VideoChapter(models.Model):
         verbose_name = "Video Chapter"
         verbose_name_plural = "Video Chapters"
 
+
+class HeadingChapter(models.Model):
+    """ Represents a heading chapter in the database."""
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    lecture = models.OneToOneField(
+        Chapter,
+        on_delete=models.CASCADE,
+        related_name='heading_chapter'
+    )
+    title = models.CharField(max_length=50, null=False)
+
+    class Meta:
+        verbose_name = "Heading Chapter"
+        verbose_name_plural = "Heading Chapters"
+
