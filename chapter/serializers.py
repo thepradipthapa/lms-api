@@ -13,6 +13,12 @@ class TextChapterSerializer(ModelSerializer):
     class Meta:
         model = TextChapter
         fields = '__all__' 
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('chapter', None)
+        return data  # Returns the full dictionary without 'chapter'
+
 
 class VideoChapterSerializer(ModelSerializer):
     """ Serializer for the VideoChapter model. """
@@ -25,6 +31,12 @@ class VideoChapterSerializer(ModelSerializer):
         model = VideoChapter
         fields = '__all__'
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('chapter', None)
+        return data  # Returns the full dictionary without 'chapter'
+
+
 class LinkChapterSerializer(ModelSerializer):
     """ Serializer for the LinkChapter model. """
     
@@ -35,6 +47,12 @@ class LinkChapterSerializer(ModelSerializer):
     class Meta:
         model = LinkChapter
         fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('chapter', None)
+        return data  # Returns the full dictionary without 'chapter'
+
 
 class HeadingChapterSerializer(ModelSerializer):
     """ Serializer for the HeadingChapter model. """
@@ -47,11 +65,20 @@ class HeadingChapterSerializer(ModelSerializer):
         model = HeadingChapter
         fields = '__all__'
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data.pop('chapter', None)
+        return data  # Returns the full dictionary without 'chapter'
+
 
 class ChapterSerializer(ModelSerializer):
     """ Serializer for the Chapter model. """
     index = serializers.IntegerField(required=False)
-    
+    heading_chapter = HeadingChapterSerializer(read_only=True)
+    link_chapter = LinkChapterSerializer(read_only=True)
+    text_chapter = TextChapterSerializer(read_only=True)
+    video_chapter = VideoChapterSerializer(read_only=True)
+
     class Meta:
         model = Chapter
         fields = '__all__'
@@ -61,6 +88,7 @@ class ChapterSerializer(ModelSerializer):
         data = self.context.get('request').data
         chapter_type = data.get('chapter_type')
         chapter_type_object = None
+        parent_chapter = validated_data.get('parent_chapter')
 
         if chapter_type == 'H':
             chapter_type_object = self.HandleHeadingChapter(data)
@@ -84,9 +112,11 @@ class ChapterSerializer(ModelSerializer):
             chapter_type_object.chapter = chapter
             chapter_type_object.save()
         else:
-            # If the chapter is a sub-chapter, set its index to the next available index under its parent 
-            pass
-
+            # If the chapter is a sub-chapter, set its index to the next available index under its parent
+            chapter.index = Chapter.objects.filter(parent_chapter=parent_chapter).count() + 1
+            chapter.save()
+            chapter_type_object.chapter = chapter
+            chapter_type_object.save()
         return chapter
 
     def HandleHeadingChapter(self, raw_json):
