@@ -41,6 +41,8 @@ class Chapter(models.Model):
         'Chapter',
         on_delete=models.CASCADE,
         related_name='subchapters',
+        null=True, 
+        blank=True
     )
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,7 +60,7 @@ class Chapter(models.Model):
 class LinkChapter(models.Model):
     """ Represents a link chapter in the database."""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    lecture = models.OneToOneField(
+    chapter = models.OneToOneField(
         Chapter,
         on_delete=models.CASCADE,
         related_name='link_chapter'
@@ -73,7 +75,7 @@ class LinkChapter(models.Model):
 class TextChapter(models.Model):
     """ Represents a text chapter in the database."""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    lecture = models.OneToOneField(
+    chapter = models.OneToOneField(
         Chapter,
         on_delete=models.CASCADE,
         related_name='text_chapter'
@@ -88,7 +90,7 @@ class TextChapter(models.Model):
 class VideoChapter(models.Model):
     """ Represents a video chapter in the database."""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    lecture = models.OneToOneField(
+    chapter = models.OneToOneField(
         Chapter,
         on_delete=models.CASCADE,
         related_name='video_chapter'
@@ -108,7 +110,7 @@ class VideoChapter(models.Model):
 class HeadingChapter(models.Model):
     """ Represents a heading chapter in the database."""
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    lecture = models.OneToOneField(
+    chapter = models.OneToOneField(
         Chapter,
         on_delete=models.CASCADE,
         related_name='heading_chapter'

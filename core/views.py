@@ -27,10 +27,15 @@ def api_root(request):
         },
 
         "Tag": {
-
-
         "Tag list": reverse('course:tag-list', request=request),
         "Tag Detail": reverse('course:tag-detail', kwargs={'pk': 'tag-pk'}, request=request),
         },
+
+        "Chapter": {
+            "Chapter Types": reverse('chapter:chapter-types', request=request),
+            "Video Plateform List": reverse('chapter:video-platform-choices', request=request),
+            "Chapter List Create": reverse('chapter:chapter-listcreateview', request=request),
+
+        }
     }
     return Response(response)
