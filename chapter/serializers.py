@@ -71,6 +71,19 @@ class HeadingChapterSerializer(ModelSerializer):
         return data  # Returns the full dictionary without 'chapter'
 
 
+
+class ChildChapterSerializer(ModelSerializer):
+    """ Serializer for the Chapter model. """
+    index = serializers.IntegerField(required=False)
+    heading_chapter = HeadingChapterSerializer(read_only=True)
+    link_chapter = LinkChapterSerializer(read_only=True)
+    text_chapter = TextChapterSerializer(read_only=True)
+    video_chapter = VideoChapterSerializer(read_only=True)
+
+    class Meta:
+        model = Chapter
+        fields = '__all__'
+
 class ChapterSerializer(ModelSerializer):
     """ Serializer for the Chapter model. """
     index = serializers.IntegerField(required=False)
@@ -78,6 +91,7 @@ class ChapterSerializer(ModelSerializer):
     link_chapter = LinkChapterSerializer(read_only=True)
     text_chapter = TextChapterSerializer(read_only=True)
     video_chapter = VideoChapterSerializer(read_only=True)
+    subchapters = ChildChapterSerializer(many=True, read_only=True)
 
     class Meta:
         model = Chapter

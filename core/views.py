@@ -34,7 +34,8 @@ def api_root(request):
         "Chapter": {
             "Chapter Types": reverse('chapter:chapter-types', request=request),
             "Video Plateform List": reverse('chapter:video-platform-choices', request=request),
-            "Chapter List Create": reverse('chapter:chapter-listcreateview', request=request),
+            "Chapter Create": reverse('chapter:chapter-createview', request=request),
+            "Chapter List": reverse('chapter:chapter-listview', kwargs={'course_id': 'course-uuid'}, request=request),
 
         }
     }
