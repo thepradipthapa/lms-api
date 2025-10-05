@@ -4,5 +4,6 @@ psycopg2
 python-decouple>=3.8,<3.9
 pillow>=11.2.1,<11.3
 django-filter>=25.1,<25.2
+shortuuid
 
 

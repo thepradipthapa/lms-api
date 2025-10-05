@@ -11,4 +11,5 @@ dependencies = [
     "pillow>=11.2.1,<11.3",
     "psycopg2>=2.9.10",
     "python-decouple>=3.8,<3.9",
+    "shortuuid>=1.0.13",
 ]
